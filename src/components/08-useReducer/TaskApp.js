@@ -17,30 +17,13 @@ export const TaskApp = () => {
         localStorage.setItem('tasks', JSON.stringify(taskState));
     }, [taskState]);
 
-    const handleDeleteTask = (taskId) => {
-        const taskDeleteAction = {
-            type: 'delete',
-            payload: taskId
-        };
-        dispatch(taskDeleteAction);
-    };
-
+    const handleDeleteTask = (taskId) => { dispatch({ type: 'delete', payload: taskId}); };
+    const handleToggle = (taskId) => { dispatch({type: 'toggle', payload: taskId}); }
     const handleAddTask = (event) => {
         event.preventDefault();
 
-        const newTask = {
-            id: new Date().getTime(),
-            desc: description,
-            done: false
-        };
-
-        const taskAddAction = {
-            type:'add',
-            payload: newTask
-        };
-
         if(description.trim().length >= 1){
-            dispatch(taskAddAction);
+            dispatch({type: 'add', payload: {id: new Date().getTime(), desc: description, done: false}});
             resetForm();
         }
     }
@@ -60,7 +43,12 @@ export const TaskApp = () => {
                                     key={task.id}
                                     className="list-group-item list-group-item-warning m-1"
                                 >
-                                    <p className="text-center">{task.desc}</p>
+                                    <p  
+                                        className={`${task.done && 'complete'}`}
+                                        onClick={() => handleToggle(task.id)}
+                                    >
+                                        {task.desc}
+                                    </p>
                                     <button 
                                         className="btn btn-outline-danger"
                                         onClick={() => handleDeleteTask(task.id)}
