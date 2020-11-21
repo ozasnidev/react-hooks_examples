@@ -1,22 +1,29 @@
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { taskReducer } from './taskReducer';
+import { useForm } from '../../hooks/useForm';
 import './styles.css';
 
-const initialState = [{
-    id: new Date().getTime(),
-    desc: 'Aprender React',
-    done: false
-}];
+const init = () => {
+    return JSON.parse(localStorage.getItem('tasks')) || [];
+}
+
 
 export const TaskApp = () => {
-    const [taskState, dispatch] = useReducer(taskReducer, initialState);
-    
+    const [taskState, dispatch] = useReducer(taskReducer, [], init);
+    const [{ description }, handleInputChange, resetForm] = useForm({
+        description: ''
+    });
+
+    useEffect( () => {
+        localStorage.setItem('tasks', JSON.stringify(taskState));
+    }, [taskState]);
+
     const handleAddTask = (event) => {
         event.preventDefault();
 
         const newTask = {
             id: new Date().getTime(),
-            desc: 'Aprender React a fondo',
+            desc: description,
             done: false
         };
 
@@ -25,7 +32,11 @@ export const TaskApp = () => {
             payload: newTask
         };
 
-        dispatch(taskAction);
+        if(description.trim().length >= 1){
+
+            dispatch(taskAction);
+            resetForm();
+        }
     }
 
     return (
@@ -50,7 +61,7 @@ export const TaskApp = () => {
                         }
                     </ul>
                 </div>
-                <div className="col-5">
+                <div className="col-5" id="formInfo">
                     <h3>Agregar Task</h3>
                     <hr/>
                     <form
@@ -62,6 +73,8 @@ export const TaskApp = () => {
                             className="form-control"
                             placeholder="Task"
                             autoComplete="off"
+                            value={ description }
+                            onChange={ handleInputChange }
                         />
                         <button
                             type="submit"
