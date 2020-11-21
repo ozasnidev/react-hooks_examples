@@ -7,7 +7,6 @@ const init = () => {
     return JSON.parse(localStorage.getItem('tasks')) || [];
 }
 
-
 export const TaskApp = () => {
     const [taskState, dispatch] = useReducer(taskReducer, [], init);
     const [{ description }, handleInputChange, resetForm] = useForm({
@@ -18,6 +17,14 @@ export const TaskApp = () => {
         localStorage.setItem('tasks', JSON.stringify(taskState));
     }, [taskState]);
 
+    const handleDeleteTask = (taskId) => {
+        const taskDeleteAction = {
+            type: 'delete',
+            payload: taskId
+        };
+        dispatch(taskDeleteAction);
+    };
+
     const handleAddTask = (event) => {
         event.preventDefault();
 
@@ -27,14 +34,13 @@ export const TaskApp = () => {
             done: false
         };
 
-        const taskAction = {
+        const taskAddAction = {
             type:'add',
             payload: newTask
         };
 
         if(description.trim().length >= 1){
-
-            dispatch(taskAction);
+            dispatch(taskAddAction);
             resetForm();
         }
     }
@@ -55,13 +61,18 @@ export const TaskApp = () => {
                                     className="list-group-item list-group-item-warning m-1"
                                 >
                                     <p className="text-center">{task.desc}</p>
-                                    <button className="btn btn-outline-danger">Borrar</button>
+                                    <button 
+                                        className="btn btn-outline-danger"
+                                        onClick={() => handleDeleteTask(task.id)}
+                                        >
+                                            Borrar
+                                    </button>
                                 </li>
                             ))
                         }
                     </ul>
                 </div>
-                <div className="col-5" id="formInfo">
+                <div className="col-5">
                     <h3>Agregar Task</h3>
                     <hr/>
                     <form
