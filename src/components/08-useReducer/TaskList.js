@@ -5,7 +5,7 @@ export const TaskList = ({taskState, handleDeleteTask, handleToggle}) => {
     return (
         <ul className="list-group list-group-flush">
             {
-                taskState.map((task, index  ) => (
+                taskState.map((task, index) => (
                     <TaskListItem 
                         key = {task.id}
                         task = {task}   
