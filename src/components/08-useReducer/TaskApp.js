@@ -2,6 +2,7 @@ import React, { useEffect, useReducer } from 'react'
 import { taskReducer } from './taskReducer';
 import { useForm } from '../../hooks/useForm';
 import './styles.css';
+import { TaskList } from './TaskList';
 
 const init = () => {
     return JSON.parse(localStorage.getItem('tasks')) || [];
@@ -36,29 +37,11 @@ export const TaskApp = () => {
                 <div className="col-7">
                     <h3>Task</h3>
                     <hr/>
-                    <ul className="list-group list-group-flush">
-                        {
-                            taskState.map(task => (
-                                <li
-                                    key={task.id}
-                                    className="list-group-item list-group-item-warning m-1"
-                                >
-                                    <p  
-                                        className={`${task.done && 'complete'}`}
-                                        onClick={() => handleToggle(task.id)}
-                                    >
-                                        {task.desc}
-                                    </p>
-                                    <button 
-                                        className="btn btn-outline-danger"
-                                        onClick={() => handleDeleteTask(task.id)}
-                                        >
-                                            Borrar
-                                    </button>
-                                </li>
-                            ))
-                        }
-                    </ul>
+                    <TaskList 
+                        taskState = {taskState}
+                        handleDeleteTask = {handleDeleteTask}
+                        handleToggle = {handleToggle}
+                    />
                 </div>
                 <div className="col-5">
                     <h3>Agregar Task</h3>
