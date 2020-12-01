@@ -18,6 +18,14 @@ describe('useFetch hook test', () => {
         expect(data.name).toBe('ho-oh');
         expect(loading).toBeFalsy();
         expect(error).toBe(null);
-    })
-    
+    });
+    test('error as result', async() => {
+        const { result, waitForNextUpdate } = renderHook( () => useFetch('https://reqres.in/apid/users?page=2'));
+        await waitForNextUpdate();
+        const { data, loading, error } = result.current;
+
+        expect(data).toBe(null);
+        expect(loading).toBeFalsy();
+        expect(error).toBe("can't load the info");
+    });
 });
