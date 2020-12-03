@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskListItem component test render 1`] = `
+<li
+  className="list-group-item list-group-item-warning m-1"
+  key="1"
+>
+  <p
+    className="false"
+    onClick={[Function]}
+  >
+    1 Aprender React.js
+  </p>
+  <button
+    className="btn btn-outline-danger"
+    onClick={[Function]}
+  >
+    Borrar
+  </button>
+</li>
+`;
