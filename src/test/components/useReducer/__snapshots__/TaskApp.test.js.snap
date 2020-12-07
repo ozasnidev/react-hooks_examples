@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TaskApp component render 1`] = `
+Array [
+  <h1>
+    TaskApp (
+    0
+    )
+  </h1>,
+  <hr />,
+  <div
+    className="row"
+  >
+    <div
+      className="col-7"
+    >
+      <h3>
+        Task
+      </h3>
+      <hr />
+      <ul
+        className="list-group list-group-flush"
+      />
+    </div>
+    <div
+      className="col-5"
+    >
+      <h3>
+        Agregar Task
+      </h3>
+      <hr />
+      <form
+        onSubmit={[Function]}
+      >
+        <input
+          autoComplete="off"
+          className="form-control"
+          name="description"
+          onChange={[Function]}
+          placeholder="Task"
+          type="text"
+          value=""
+        />
+        <button
+          className="btn btn-outline-success mt-2 btn-block"
+          type="submit"
+        >
+          Agregar
+        </button>
+      </form>
+    </div>
+  </div>,
+]
+`;
